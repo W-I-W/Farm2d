@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-using VContainer.Unity;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerRenderer : MonoBehaviour
@@ -13,10 +12,11 @@ public class PlayerRenderer : MonoBehaviour
     private Rigidbody2D m_Body;
 
 
-    private void Start()
+    private void OnValidate()
     {
         m_Body = GetComponent<Rigidbody2D>();
     }
+
 
     public void FixedUpdate()
     {
