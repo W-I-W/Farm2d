@@ -63,6 +63,6 @@ public class ItemScaner : MonoBehaviour
     public void Change(IAction input)
     {
         UIHelpKey.Hide();
-        UIHelpKey.Show(input.keyEnter.ToString());
+        UIHelpKey.Show(input.keyEnter);
     }
 }
