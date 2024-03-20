@@ -26,21 +26,12 @@ public class ItemScaner : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        bool isEnter = collision.TryGetComponent(out IAction action);
 
-        if (!isEnter) return;
+    }
 
-        bool isItem = collision.TryGetComponent(out ITickeble item);
-
-        if (isItem)
-        {
-            m_Tickeble = item;
-        }
-
-        m_Action = action;
-        m_Collider = collision;
-
-        Change(action);
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Scan(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -64,5 +55,24 @@ public class ItemScaner : MonoBehaviour
     {
         UIHelpKey.Hide();
         UIHelpKey.Show(input.keyEnter);
+    }
+
+    public void Scan(Collider2D collision)
+    {
+        bool isEnter = collision.TryGetComponent(out IAction action);
+
+        if (!isEnter) return;
+
+        bool isItem = collision.TryGetComponent(out ITickeble item);
+
+        if (isItem)
+        {
+            m_Tickeble = item;
+        }
+
+        m_Action = action;
+        m_Collider = collision;
+
+        Change(action);
     }
 }

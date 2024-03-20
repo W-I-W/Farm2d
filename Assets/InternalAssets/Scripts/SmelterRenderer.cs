@@ -10,12 +10,13 @@ public class SmelterRenderer : MonoBehaviour, IAction, ITickeble
     {
         if (Input.GetKeyDown(keyEnter))
         {
-            UIGame.BakeActive(!UIGame.bakeSelf);
+            bool isSmelter = !UIGame.smelterSelf;
+            UIGame.SmelterActive(isSmelter);
         }
     }
 
     public void Exit()
     {
-        UIGame.BakeActive(false);
+        UIGame.SmelterActive(false);
     }
 }

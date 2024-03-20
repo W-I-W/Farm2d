@@ -1,3 +1,5 @@
+using DG.Tweening;
+
 using UnityEngine;
 
 
@@ -5,8 +7,10 @@ using UnityEngine;
 public class DropRenderer : MonoBehaviour, IAction, ITickeble
 {
     [SerializeField] private ItemData m_Item;
+    [SerializeField] private SpriteRenderer m_Sprite;
 
-    private SpriteRenderer m_Sprite;
+    private Sequence m_Seq;
+    public Ease ease { get; set; }
 
     public ItemData item
     {
@@ -19,13 +23,20 @@ public class DropRenderer : MonoBehaviour, IAction, ITickeble
 
     public KeyCode keyEnter => DataKeys.Enter;
 
+    private void Start()
+    {
+        m_Sprite.sprite = item.icon;
+    }
+
     public void Tick()
     {
         if (Input.GetKeyDown(keyEnter))
         {
             bool isDrop = UIInventory.TryAdd(m_Item);
+
             if (isDrop)
             {
+                m_Seq.Kill();
                 Destroy(gameObject);
             }
         }
@@ -36,15 +47,10 @@ public class DropRenderer : MonoBehaviour, IAction, ITickeble
 
     }
 
-
-
-    private void OnValidate()
+    public void OnDrop(Ease ease)
     {
-        m_Sprite = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        m_Sprite.sprite = item.icon;
+        Vector3 endPosition = transform.position + (Vector3)Random.insideUnitCircle * 2;
+        m_Seq = DOTween.Sequence();
+        m_Seq.Append(transform.DOJump(endPosition, 0.5f, 2, 1).SetEase(ease));
     }
 }

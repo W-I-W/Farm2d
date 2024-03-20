@@ -5,19 +5,27 @@ using UnityEngine;
 
 public class UIGame : MonoBehaviour
 {
-    [SerializeField] private SmelterUISettings m_Bake;
+    [SerializeField] private SmelterUISettings m_Smelter;
 
     private static UIGame s_Instance;
 
-    public static bool bakeSelf { get => s_Instance.m_Bake.gameObject.activeSelf; }
+    public static bool smelterSelf { get => s_Instance.m_Smelter.gameObject.activeSelf; }
 
     private void Awake()
     {
         s_Instance = this;
     }
 
-    public static void BakeActive(bool active) =>
-        s_Instance.m_Bake.gameObject.SetActive(active);
+    private void Start()
+    {
+        s_Instance.m_Smelter.gameObject.SetActive(false);
+    }
+
+    public static void SmelterActive(bool active)
+    {
+        if (s_Instance != null)
+            s_Instance.m_Smelter.gameObject.SetActive(active);
+    }
 
 
 }
